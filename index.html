@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tʀᴀᴄᴋ 72 | Multi-Engagement Hub</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --brand-color: #ffaa00;
+            --accent: #58a6ff;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Branding Section */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--brand-color);
+            padding-bottom: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--brand-color);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .admin-slot {
+            background: linear-gradient(135deg, #ffaa00, #ff7700);
+            width: 100%;
+            max-width: 480px;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            color: #000;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        /* Input & Controls */
+        .control-panel {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 480px;
+            box-sizing: border-box;
+            border: 1px solid #30363d;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--brand-color);
+            color: #000;
+            border-color: var(--brand-color);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .add-btn {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Search Bar */
+        .search-box {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        /* List Display */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 480px;
+            margin-top: 20px;
+        }
+
+        .user-card {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #30363d;
+            transition: 0.3s;
+        }
+
+        .user-card:hover {
+            border-color: var(--brand-color);
+        }
+
+        .user-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .delete-btn {
+            color: #f85149;
+            font-size: 11px;
+            cursor: pointer;
+            background: none;
+            border: 1px solid #f85149;
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="branding-header">
+        <div class="brand-name">Tʀᴀᴄᴋ 72</div>
+        <p style="color: var(--text-secondary); margin: 5px 0;">All-in-One Crypto Engagement Hub</p>
+    </div>
+
+    <a href="https://x.com/realTrack72" target="_blank" class="admin-slot">
+        👑 FOUNDER: Tʀᴀᴄᴋ 72 (X Profile)
+    </a>
+
+    <div class="control-panel">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('X')">X (Twitter)</button>
+            <button class="tab-btn" onclick="switchTab('Baseapp')">Baseapp</button>
+            <button class="tab-btn" onclick="switchTab('Discord')">Discord</button>
+            <button class="tab-btn" onclick="switchTab('TG')">Telegram</button>
+        </div>
+        
+        <input type="text" id="userName" placeholder="বন্ধুর নাম (যেমন: Rakib)">
+        <input type="text" id="userLink" placeholder="ইউজারনেম বা লিংক দিন">
+        <button class="add-btn" onclick="saveUser()">সেভ করুন</button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchBar" placeholder="নাম দিয়ে খুঁজুন..." onkeyup="searchUser()">
+    </div>
+
+    <div class="grid" id="userGrid">
+        </div>
+
+    <script>
+        let currentTab = 'X';
+        let userData = JSON.parse(localStorage.getItem('track72_pro_data')) || { X: [], Baseapp: [], Discord: [], TG: [] };
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.includes(tab));
+            });
+            renderUsers();
+        }
+
+        function saveUser() {
+            let name = document.getElementById('userName').value.trim();
+            let link = document.getElementById('userLink').value.trim();
+
+            if (name && link) {
+                // Auto Link Formatter
+                if (!link.startsWith('http')) {
+                    if (currentTab === 'X') link = 'https://x.com/' + link.replace('@', '');
+                    if (currentTab === 'Baseapp') link = 'https://baseapp.com/' + link.replace('@', '');
+                    if (currentTab === 'TG') link = 'https://t.me/' + link.replace('@', '');
+                    if (currentTab === 'Discord') link = 'https://discord.com/users/' + link;
+                }
+
+                userData[currentTab].push({ name, link });
+                localStorage.setItem('track72_pro_data', JSON.stringify(userData));
+                document.getElementById('userName').value = '';
+                document.getElementById('userLink').value = '';
+                renderUsers();
+            } else {
+                alert("দয়া করে নাম এবং লিংক দুটোই দিন।");
+            }
+        }
+
+        function deleteUser(index) {
+            if(confirm("আপনি কি এটি মুছে ফেলতে চান?")) {
+                userData[currentTab].splice(index, 1);
+                localStorage.setItem('track72_pro_data', JSON.stringify(userData));
+                renderUsers();
+            }
+        }
+
+        function searchUser() {
+            let filter = document.getElementById('searchBar').value.toLowerCase();
+            renderUsers(filter);
+        }
+
+        function renderUsers(filter = "") {
+            const grid = document.getElementById('userGrid');
+            grid.innerHTML = '';
+            
+            userData[currentTab].forEach((user, index) => {
+                if (user.name.toLowerCase().includes(filter)) {
+                    grid.innerHTML += `
+                        <div class="user-card">
+                            <a href="${user.link}" target="_blank" class="user-link">${user.name}</a>
+                            <button class="delete-btn" onclick="deleteUser(${index})">Delete</button>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // Initial Load
+        renderUsers();
+    </script>
+
+</body>
+  </html>
