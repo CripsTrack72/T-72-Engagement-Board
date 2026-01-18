@@ -3,115 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tʀᴀᴄᴋ 72 | Premium Hub</title>
+    <title>Tʀᴀᴄᴋ 72 | Premium Engagement Suite</title>
     <style>
         :root {
-            --bg: #09090b;
-            --card: #18181b;
-            --gold: #f59e0b;
-            --blue: #3b82f6;
-            --text: #fafafa;
-            --text-dim: #a1a1aa;
+            --primary-bg: #0a0c10;
+            --card-bg: #161b22;
+            --gold: #ffaa00;
+            --blue: #58a6ff;
+            --text: #f0f6fc;
+            --success: #238636;
         }
 
         body {
-            background-color: var(--bg);
+            background-color: var(--primary-bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            margin: 0; padding: 15px;
+            margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .brand-name { font-size: 2.5rem; color: var(--gold); font-weight: 800; margin-bottom: 10px; }
+        .brand-header { text-align: center; margin-bottom: 20px; }
+        .brand-name { font-size: 2.8rem; color: var(--gold); margin: 0; font-weight: 800; letter-spacing: -1px; }
         
-        .profile-ring {
-            width: 110px; height: 110px;
-            border-radius: 50%; border: 3px solid var(--gold);
-            padding: 4px; margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        /* Profile Image with Golden Ring */
+        .profile-container {
+            position: relative; width: 125px; height: 125px;
+            margin: 15px auto; border-radius: 50%;
+            border: 4px solid var(--gold); padding: 5px;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+            cursor: pointer;
         }
         .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        .founder-btn {
-            background: linear-gradient(135deg, var(--gold), #b45309);
-            color: #000; width: 100%; max-width: 400px;
-            padding: 15px; border-radius: 10px; text-align: center;
-            font-weight: 800; text-decoration: none; display: block;
-            margin-bottom: 20px; text-transform: uppercase;
+        .founder-card {
+            background: linear-gradient(135deg, #ffaa00, #ff7700);
+            color: black; width: 100%; max-width: 450px;
+            padding: 15px; border-radius: 12px; text-align: center;
+            font-weight: bold; text-decoration: none; display: block;
+            margin-bottom: 25px; box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
         }
 
-        /* Improved Timer Box */
-        .session-panel {
-            background: #1e1e24; width: 100%; max-width: 400px;
-            padding: 20px; border-radius: 12px; border: 2px solid var(--gold);
+        /* Timer UI */
+        .timer-box {
+            background: var(--card-bg); width: 100%; max-width: 450px;
+            padding: 20px; border-radius: 15px; border: 2px solid var(--gold);
             margin-bottom: 20px; text-align: center; display: none;
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
         }
-        #timer-display { font-size: 2.5rem; color: var(--gold); font-weight: 800; margin: 5px 0; font-family: 'Courier New', monospace; }
+        #timer-display { font-size: 2.5rem; color: var(--gold); font-weight: bold; font-family: monospace; }
 
-        .tabs { display: flex; gap: 8px; overflow-x: auto; width: 100%; max-width: 400px; margin-bottom: 15px; scrollbar-width: none; }
-        .tab-btn { background: #27272a; border: none; color: var(--text-dim); padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; }
-        .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; }
+        .tabs { display: flex; gap: 8px; overflow-x: auto; width: 100%; max-width: 480px; margin-bottom: 20px; }
+        .tab-btn { background: #21262d; border: 1px solid #30363d; color: #8b949e; padding: 10px 20px; border-radius: 25px; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { background: var(--gold); color: black; font-weight: bold; }
 
-        .input-area { 
-            background: var(--card); padding: 20px; border-radius: 12px; 
-            width: 100%; max-width: 400px; box-sizing: border-box; 
-            border: 1px solid #27272a; margin-bottom: 20px;
+        .control-panel { background: var(--card-bg); padding: 20px; border-radius: 15px; width: 100%; max-width: 450px; box-sizing: border-box; border: 1px solid #30363d; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box; }
+        .btn-prime { width: 100%; background: var(--blue); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        .grid { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 450px; margin-top: 20px; }
+        .user-card { background: var(--card-bg); padding: 15px; border-radius: 12px; display: flex; align-items: center; border: 1px solid #30363d; }
+        .serial-no { background: var(--gold); color: black; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; margin-right: 15px; }
+        .user-link { flex-grow: 1; text-decoration: none; color: white; font-weight: 600; font-size: 1.1rem; }
+        .check-btn { cursor: pointer; font-size: 1.5rem; }
+        .done { opacity: 0.3; filter: grayscale(1); }
+
+        #celebration { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
+            z-index: 999; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
-        input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #3f3f46; background: #09090b; color: white; box-sizing: border-box; }
-        .add-btn { width: 100%; background: var(--blue); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
-        .grid { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; }
-        .user-card { 
-            background: var(--card); padding: 12px; border-radius: 10px; 
-            display: flex; align-items: center; border: 1px solid #27272a; 
-        }
-        .rank { color: var(--gold); font-weight: bold; margin-right: 12px; }
-        .user-link { flex-grow: 1; text-decoration: none; color: var(--text); font-weight: 500; }
-        .status-dot { cursor: pointer; font-size: 1.2rem; }
-        .completed { opacity: 0.4; filter: grayscale(1); }
+        /* LOCKED SYSTEM */
+        .locked-content { opacity: 0.15; pointer-events: none; transition: 0.5s; }
     </style>
 </head>
 <body>
 
-    <h1 class="brand-name">Tʀᴀᴄᴋ 72</h1>
-    <div class="profile-ring">
-        <img src="https://i.ibb.co/LhbVnSg/1000017265.jpg" alt="Tʀᴀᴄᴋ 72" class="profile-img">
+    <div class="brand-header">
+        <h1 class="brand-name">Tʀᴀᴄᴋ 72</h1>
+        <div class="profile-container" onclick="unlockBoard()">
+            <img src="https://i.ibb.co/LhbVnSg/1000017265.jpg" alt="Founder" class="profile-img">
+        </div>
     </div>
 
-    <a id="founder-link" href="https://x.com/realTrack72" target="_blank" class="founder-btn">
-        👑 Founder: Tʀᴀᴄᴋ 72 (X Link)
+    <a id="founder-link" href="https://x.com/realTrack72" target="_blank" class="founder-card" onclick="unlockBoard()">
+        👑 FOUNDER: Tʀᴀᴄᴋ 72 (CLICK IMAGE OR LINK TO UNLOCK)
     </a>
 
-    <div class="session-panel" id="timer-box">
-        <div style="font-size: 0.9rem; color: var(--text-dim); text-transform: uppercase;">Current Session Goal</div>
-        <div id="goal-display" style="font-size: 1.2rem; font-weight: bold; margin: 5px 0;">Engagement Grind</div>
+    <div id="session-timer" class="timer-box">
+        <div id="goal-title" style="font-weight: bold; margin-bottom: 5px;"></div>
         <div id="timer-display">00:00:00</div>
-        <button onclick="endSession()" style="background:transparent; border:1px solid #ef4444; color:#ef4444; padding:4px 12px; border-radius:5px; cursor:pointer; font-size: 0.8rem;">STOP SESSION</button>
     </div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('X')">Twitter (X)</button>
-        <button class="tab-btn" onclick="switchTab('TG')">Telegram</button>
-        <button class="tab-btn" onclick="switchTab('Baseapp')">Baseapp</button>
-        <button class="tab-btn" onclick="switchTab('Discord')">Discord</button>
+    <div id="main-content" class="locked-content">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('X')">X (Twitter)</button>
+            <button class="tab-btn" onclick="switchTab('TG')">Telegram</button>
+            <button class="tab-btn" onclick="switchTab('Baseapp')">Baseapp</button>
+            <button class="tab-btn" onclick="switchTab('Discord')">Discord</button>
+        </div>
+
+        <div class="control-panel">
+            <input type="text" id="goalInput" placeholder="Session Goal (e.g. 50 Retweets)">
+            <input type="number" id="timeInput" placeholder="Minutes (e.g. 20)">
+            <input type="text" id="userName" placeholder="Contact Name">
+            <input type="text" id="userLink" placeholder="Username or Profile Link">
+            <button class="btn-prime" onclick="saveData()">+ START SESSION & ADD</button>
+        </div>
+
+        <div class="grid" id="userGrid"></div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="goalInput" placeholder="Enter your goal (e.g. 50 Retweets)">
-        <input type="number" id="timeInput" placeholder="Session time in Minutes">
-        <hr style="border:0; border-top:1px solid #27272a; margin: 15px 0;">
-        <input type="text" id="nameInput" placeholder="Person's Name">
-        <input type="text" id="linkInput" placeholder="Username or Link">
-        <button class="add-btn" onclick="processAll()">+ START & ADD TO LIST</button>
+    <div id="celebration">
+        <h1 style="color:var(--gold); font-size: 3rem;">CONGRATS!</h1>
+        <p style="font-size: 1.2rem;">Goal Completed. Your branding is growing! 🚀</p>
+        <button onclick="document.getElementById('celebration').style.display='none'" class="btn-prime" style="margin-top:20px; width:150px;">CLOSE</button>
     </div>
-
-    <div class="grid" id="entryGrid"></div>
 
     <script>
         let currentTab = 'X';
-        let timerInterval;
-        let data = JSON.parse(localStorage.getItem('T72_FINAL_DB')) || { X: [], TG: [], Baseapp: [], Discord: [] };
+        let isUnlocked = false;
+        let countdown;
+        let db = JSON.parse(localStorage.getItem('T72_ULTIMATE_DB')) || { X: [], TG: [], Baseapp: [], Discord: [] };
 
         const founderLinks = {
             X: "https://x.com/realTrack72",
@@ -120,87 +131,70 @@
             Baseapp: "https://base.app/profile/realtrealtrack72"
         };
 
+        function unlockBoard() {
+            isUnlocked = true;
+            document.getElementById('main-content').classList.remove('locked-content');
+            document.getElementById('founder-link').innerText = "👑 FOUNDER: Tʀᴀᴄᴋ 72 (UNLOCKED)";
+        }
+
         function switchTab(t) {
             currentTab = t;
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(t)));
             document.getElementById('founder-link').href = founderLinks[t];
-            document.getElementById('founder-link').innerText = `👑 Founder: Tʀᴀᴄᴋ 72 (${t} Link)`;
             render();
         }
 
-        function processAll() {
-            const goal = document.getElementById('goalInput').value;
+        function saveData() {
+            const name = document.getElementById('userName').value.trim();
+            const linkInput = document.getElementById('userLink').value.trim();
             const mins = document.getElementById('timeInput').value;
-            const name = document.getElementById('nameInput').value;
-            let link = document.getElementById('linkInput').value;
+            const goal = document.getElementById('goalInput').value;
 
-            // Start Timer if minutes provided
-            if (mins > 0) {
-                startTimer(mins, goal);
-            }
+            if (mins > 0) startTimer(mins, goal);
 
-            // Add User to List
-            if (name && link) {
-                if (!link.startsWith('http')) {
-                    if (currentTab === 'X') link = 'https://x.com/' + link.replace('@','');
-                    if (currentTab === 'TG') link = 'https://t.me/' + link.replace('@','');
+            if (name && linkInput) {
+                let finalLink = linkInput;
+                if (!linkInput.startsWith('http')) {
+                    if (currentTab === 'X') finalLink = 'https://x.com/' + linkInput.replace('@','');
+                    if (currentTab === 'TG') finalLink = 'https://t.me/' + linkInput.replace('@','');
                 }
-                data[currentTab].push({ name, link, done: false });
-                localStorage.setItem('T72_FINAL_DB', JSON.stringify(data));
-                
-                // Clear User inputs but keep Goal/Time if user wants to add multiple people to same goal
-                document.getElementById('nameInput').value = '';
-                document.getElementById('linkInput').value = '';
+                db[currentTab].push({ name, link: finalLink, done: false });
+                localStorage.setItem('T72_ULTIMATE_DB', JSON.stringify(db));
+                document.getElementById('userName').value = '';
+                document.getElementById('userLink').value = '';
                 render();
-            } else if (mins <= 0) {
-                alert("Please enter at least a name and link, or a session time.");
             }
         }
 
         function startTimer(m, g) {
-            clearInterval(timerInterval);
-            document.getElementById('timer-box').style.display = 'block';
-            document.getElementById('goal-display').innerText = g || "Engagement Grind";
-            let totalSeconds = m * 60;
-
-            timerInterval = setInterval(() => {
-                let hours = Math.floor(totalSeconds / 3600);
-                let minutes = Math.floor((totalSeconds % 3600) / 60);
-                let seconds = totalSeconds % 60;
-                
-                document.getElementById('timer-display').innerText = 
-                    `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-                
-                if (totalSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    alert("Time's up! Great work on your goal: " + (g || "Engagement Grind"));
-                }
-                totalSeconds--;
+            clearInterval(countdown);
+            document.getElementById('session-timer').style.display = 'block';
+            document.getElementById('goal-title').innerText = "Goal: " + (g || "Grind");
+            let sec = m * 60;
+            countdown = setInterval(() => {
+                let h = Math.floor(sec / 3600), min = Math.floor((sec % 3600) / 60), s = sec % 60;
+                document.getElementById('timer-display').innerText = `${h.toString().padStart(2,'0')}:${min.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                if (sec <= 0) { clearInterval(countdown); document.getElementById('celebration').style.display = 'flex'; }
+                sec--;
             }, 1000);
         }
 
-        function endSession() {
-            clearInterval(timerInterval);
-            document.getElementById('timer-box').style.display = 'none';
-        }
-
-        function toggleEntry(i) {
-            data[currentTab][i].done = !data[currentTab][i].done;
-            localStorage.setItem('T72_FINAL_DB', JSON.stringify(data));
+        function toggleDone(i) {
+            db[currentTab][i].done = !db[currentTab][i].done;
+            localStorage.setItem('T72_ULTIMATE_DB', JSON.stringify(db));
             render();
+            if (db[currentTab].every(u => u.done) && db[currentTab].length > 0) document.getElementById('celebration').style.display = 'flex';
         }
 
         function render() {
-            const container = document.getElementById('entryGrid');
-            container.innerHTML = '';
-            data[currentTab].forEach((item, i) => {
-                container.innerHTML += `
-                    <div class="user-card ${item.done ? 'completed' : ''}">
-                        <div class="rank">#${i + 1}</div>
-                        <a href="${item.link}" target="_blank" class="user-link">${item.name}</a>
-                        <div class="status-dot" onclick="toggleEntry(${i})">
-                            ${item.done ? '✅' : '⚪'}
-                        </div>
+            const grid = document.getElementById('userGrid');
+            grid.innerHTML = '';
+            db[currentTab].forEach((user, i) => {
+                grid.innerHTML += `
+                    <div class="user-card ${user.done ? 'done' : ''}">
+                        <div class="serial-no">${i + 1}</div>
+                        <a href="${user.link}" target="_blank" class="user-link">${user.name}</a>
+                        <div class="check-btn" onclick="toggleDone(${i})">${user.done ? '✅' : '⚪'}</div>
                     </div>
                 `;
             });
