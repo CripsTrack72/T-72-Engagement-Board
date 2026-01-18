@@ -1,271 +1,261 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tʀᴀᴄᴋ 72 | Multi-Engagement Hub</title>
+    <meta property="og:title" content="Tʀᴀᴄᴋ 72 Engagement Board">
+    <meta property="og:image" content="https://i.ibb.co.com/Jj20zVJD/1000017265.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    
     <style>
         :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --brand-color: #ffaa00;
-            --accent: #58a6ff;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
+            --bg: #09090b;
+            --card: #18181b;
+            --gold: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.3);
+            --blue: #3b82f6;
+            --text: #fafafa;
+            --text-dim: #a1a1aa;
+            --success: #22c55e;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 15px;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Branding Section */
-        .branding-header {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--brand-color);
-            padding-bottom: 10px;
-            width: 100%;
-            max-width: 500px;
+        /* Profile & Branding */
+        .brand-section { text-align: center; margin: 20px 0; }
+        .brand-name { font-size: 3rem; color: var(--gold); font-weight: 800; letter-spacing: -2px; margin: 0; }
+        
+        .profile-ring {
+            width: 130px; height: 130px;
+            border-radius: 50%; border: 4px solid var(--gold);
+            padding: 5px; margin: 15px auto;
+            box-shadow: 0 0 25px var(--gold-glow);
+            overflow: hidden;
+        }
+        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+        /* Gatekeeper Button */
+        .founder-btn {
+            background: linear-gradient(135deg, var(--gold), #b45309);
+            color: #000; width: 100%; max-width: 450px;
+            padding: 18px; border-radius: 12px; text-align: center;
+            font-weight: 900; text-decoration: none; display: block;
+            margin-bottom: 25px; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-transform: uppercase;
         }
 
-        .brand-name {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--brand-color);
-            margin: 0;
-            letter-spacing: 2px;
+        /* Timer & Motivation */
+        .session-panel {
+            background: var(--card); width: 100%; max-width: 450px;
+            padding: 20px; border-radius: 16px; border: 1px solid #27272a;
+            margin-bottom: 20px; text-align: center;
+        }
+        #timer-display { font-size: 2rem; color: var(--gold); font-weight: 700; margin: 10px 0; font-family: monospace; }
+
+        /* Platform Tabs */
+        .tabs { display: flex; gap: 8px; overflow-x: auto; width: 100%; max-width: 480px; margin-bottom: 20px; scrollbar-width: none; }
+        .tab-btn { background: #27272a; border: none; color: var(--text-dim); padding: 10px 22px; border-radius: 30px; cursor: pointer; white-space: nowrap; transition: 0.3s; }
+        .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; }
+
+        /* User Inputs */
+        .input-area { 
+            background: var(--card); padding: 20px; border-radius: 16px; 
+            width: 100%; max-width: 450px; box-sizing: border-box; 
+            border: 1px solid #27272a; margin-bottom: 20px;
+        }
+        input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #3f3f46; background: #09090b; color: white; box-sizing: border-box; }
+        .add-btn { width: 100%; background: var(--blue); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* Grid List */
+        .grid { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 450px; }
+        .user-card { 
+            background: var(--card); padding: 15px; border-radius: 12px; 
+            display: flex; align-items: center; border: 1px solid #27272a; 
+        }
+        .rank { color: var(--gold); font-weight: 800; margin-right: 15px; font-size: 1.2rem; min-width: 30px; }
+        .user-link { flex-grow: 1; text-decoration: none; color: var(--text); font-weight: 500; font-size: 1.1rem; }
+        .done-toggle { cursor: pointer; font-size: 1.4rem; padding-left: 10px; }
+        .completed { opacity: 0.3; filter: grayscale(1); }
+
+        /* Celebration Screen */
+        #celebration-overlay { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
+            z-index: 1000; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
 
-        .admin-slot {
-            background: linear-gradient(135deg, #ffaa00, #ff7700);
-            width: 100%;
-            max-width: 480px;
-            padding: 18px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: bold;
-            text-decoration: none;
-            color: #000;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
-            display: block;
-            font-size: 1.1rem;
-        }
-
-        /* Input & Controls */
-        .control-panel {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 480px;
-            box-sizing: border-box;
-            border: 1px solid #30363d;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .tab-btn {
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: var(--text-secondary);
-            padding: 8px 18px;
-            border-radius: 20px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.3s;
-        }
-
-        .tab-btn.active {
-            background: var(--brand-color);
-            color: #000;
-            border-color: var(--brand-color);
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
-            background: #0d1117;
-            color: white;
-            box-sizing: border-box;
-        }
-
-        .add-btn {
-            width: 100%;
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Search Bar */
-        .search-box {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 480px;
-        }
-
-        /* List Display */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 480px;
-            margin-top: 20px;
-        }
-
-        .user-card {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #30363d;
-            transition: 0.3s;
-        }
-
-        .user-card:hover {
-            border-color: var(--brand-color);
-        }
-
-        .user-link {
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 500;
-            display: block;
-            margin-bottom: 8px;
-            word-break: break-all;
-        }
-
-        .delete-btn {
-            color: #f85149;
-            font-size: 11px;
-            cursor: pointer;
-            background: none;
-            border: 1px solid #f85149;
-            padding: 2px 8px;
-            border-radius: 5px;
-        }
+        /* Restricted until Founder visit */
+        .locked { opacity: 0.2; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <div class="branding-header">
-        <div class="brand-name">Tʀᴀᴄᴋ 72</div>
-        <p style="color: var(--text-secondary); margin: 5px 0;">All-in-One Crypto Engagement Hub</p>
+    <div class="brand-section">
+        <h1 class="brand-name">Tʀᴀᴄᴋ 72</h1>
+        <div class="profile-ring">
+            <img src="https://i.ibb.co.com/Jj20zVJD/1000017265.jpg" alt="Tʀᴀᴄᴋ 72" class="profile-img">
+        </div>
     </div>
 
-    <a href="https://x.com/realTrack72" target="_blank" class="admin-slot">
-        👑 FOUNDER: Tʀᴀᴄᴋ 72 (X Profile)
+    <a id="founder-link" href="https://x.com/realTrack72" target="_blank" class="founder-btn" onclick="unlockBoard()">
+        👑 Founder: Tʀᴀᴄᴋ 72 (Connect First)
     </a>
 
-    <div class="control-panel">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('X')">X (Twitter)</button>
-            <button class="tab-btn" onclick="switchTab('Baseapp')">Baseapp</button>
-            <button class="tab-btn" onclick="switchTab('Discord')">Discord</button>
-            <button class="tab-btn" onclick="switchTab('TG')">Telegram</button>
-        </div>
-        
-        <input type="text" id="userName" placeholder="বন্ধুর নাম (যেমন: Rakib)">
-        <input type="text" id="userLink" placeholder="ইউজারনেম বা লিংক দিন">
-        <button class="add-btn" onclick="saveUser()">সেভ করুন</button>
+    <div class="session-panel" id="timer-box" style="display:none;">
+        <span style="color:var(--text-dim)">Current Goal: <b id="goal-display" style="color:var(--text)"></b></span>
+        <div id="timer-display">00:00:00</div>
+        <button onclick="endSession()" style="background:transparent; border:1px solid #ef4444; color:#ef4444; padding:5px 15px; border-radius:6px; cursor:pointer;">End Session</button>
     </div>
 
-    <div class="search-box">
-        <input type="text" id="searchBar" placeholder="নাম দিয়ে খুঁজুন..." onkeyup="searchUser()">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('X')">Twitter (X)</button>
+        <button class="tab-btn" onclick="switchTab('TG')">Telegram</button>
+        <button class="tab-btn" onclick="switchTab('Baseapp')">Baseapp</button>
+        <button class="tab-btn" onclick="switchTab('Discord')">Discord</button>
+        <button class="tab-btn" onclick="switchTab('Impression')">Impression Hub</button>
     </div>
 
-    <div class="grid" id="userGrid">
+    <div id="board-container" class="locked">
+        <div class="input-area">
+            <input type="text" id="goalName" placeholder="What's your goal? (e.g. 50 Retweets)">
+            <input type="number" id="sessionTime" placeholder="Duration in Minutes">
+            <hr style="border:0; border-top:1px solid #27272a; margin: 15px 0;">
+            <input type="text" id="targetName" placeholder="User/Profile Name">
+            <input type="text" id="targetLink" placeholder="Username or Profile Link">
+            <button class="add-btn" onclick="addNewEntry()">+ Add to my Worklist</button>
         </div>
+
+        <div class="grid" id="entryGrid"></div>
+    </div>
+
+    <div id="celebration-overlay">
+        <h1 style="color:var(--gold); font-size: 3.5rem; margin-bottom:0;">EXCELLENT!</h1>
+        <p style="color:var(--text); font-size: 1.2rem; max-width: 80%;">Your daily engagement task is complete.<br>Your future self will thank you for this grind. 🚀</p>
+        <button onclick="closeCelebration()" class="add-btn" style="max-width:200px; margin-top:20px;">Return to Hub</button>
+    </div>
 
     <script>
-        let currentTab = 'X';
-        let userData = JSON.parse(localStorage.getItem('track72_pro_data')) || { X: [], Baseapp: [], Discord: [], TG: [] };
+        let activeTab = 'X';
+        let countdown;
+        let db = JSON.parse(localStorage.getItem('T72_PRO_DB')) || { X: [], TG: [], Baseapp: [], Discord: [], Impression: [] };
 
-        function switchTab(tab) {
-            currentTab = tab;
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.includes(tab));
-            });
-            renderUsers();
+        const links = {
+            X: "https://x.com/realTrack72",
+            TG: "https://t.me/redBooster",
+            Discord: "https://discord.com/users/realtrack72",
+            Baseapp: "https://base.app/profile/realtrealtrack72",
+            Impression: "https://x.com/realTrack72"
+        };
+
+        function unlockBoard() {
+            document.getElementById('board-container').classList.remove('locked');
+            document.getElementById('founder-link').innerText = "👑 Founder: Tʀᴀᴄᴋ 72 (Connected)";
         }
 
-        function saveUser() {
-            let name = document.getElementById('userName').value.trim();
-            let link = document.getElementById('userLink').value.trim();
+        function switchTab(t) {
+            activeTab = t;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(t)));
+            const fBtn = document.getElementById('founder-link');
+            fBtn.href = links[t];
+            fBtn.innerHTML = `👑 Founder: Tʀᴀᴄᴋ 72 (${t} Link)`;
+            render();
+        }
+
+        function addNewEntry() {
+            let name = document.getElementById('targetName').value.trim();
+            let link = document.getElementById('targetLink').value.trim();
+            let time = document.getElementById('sessionTime').value;
+            let goal = document.getElementById('goalName').value;
 
             if (name && link) {
-                // Auto Link Formatter
+                if (activeTab === 'Impression' && db.Impression.length >= 1) {
+                    alert("Only 1 Impression ID allowed!"); return;
+                }
+                
+                // Smart Linker
                 if (!link.startsWith('http')) {
-                    if (currentTab === 'X') link = 'https://x.com/' + link.replace('@', '');
-                    if (currentTab === 'Baseapp') link = 'https://baseapp.com/' + link.replace('@', '');
-                    if (currentTab === 'TG') link = 'https://t.me/' + link.replace('@', '');
-                    if (currentTab === 'Discord') link = 'https://discord.com/users/' + link;
+                    if (activeTab === 'X') link = 'https://x.com/' + link.replace('@','');
+                    if (activeTab === 'TG') link = 'https://t.me/' + link.replace('@','');
                 }
 
-                userData[currentTab].push({ name, link });
-                localStorage.setItem('track72_pro_data', JSON.stringify(userData));
-                document.getElementById('userName').value = '';
-                document.getElementById('userLink').value = '';
-                renderUsers();
-            } else {
-                alert("দয়া করে নাম এবং লিংক দুটোই দিন।");
+                db[activeTab].push({ name, link, status: false });
+                localStorage.setItem('T72_PRO_DB', JSON.stringify(db));
+                
+                if(time > 0) startSession(time, goal);
+                
+                document.getElementById('targetName').value = '';
+                document.getElementById('targetLink').value = '';
+                render();
             }
         }
 
-        function deleteUser(index) {
-            if(confirm("আপনি কি এটি মুছে ফেলতে চান?")) {
-                userData[currentTab].splice(index, 1);
-                localStorage.setItem('track72_pro_data', JSON.stringify(userData));
-                renderUsers();
-            }
+        function startSession(min, goal) {
+            clearInterval(countdown);
+            document.getElementById('timer-box').style.display = 'block';
+            document.getElementById('goal-display').innerText = goal || "Engagement Grind";
+            let seconds = min * 60;
+
+            countdown = setInterval(() => {
+                let h = Math.floor(seconds / 3600);
+                let m = Math.floor((seconds % 3600) / 60);
+                let s = seconds % 60;
+                document.getElementById('timer-display').innerText = 
+                    `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    showSuccess();
+                }
+                seconds--;
+            }, 1000);
         }
 
-        function searchUser() {
-            let filter = document.getElementById('searchBar').value.toLowerCase();
-            renderUsers(filter);
-        }
-
-        function renderUsers(filter = "") {
-            const grid = document.getElementById('userGrid');
-            grid.innerHTML = '';
+        function toggleStatus(i) {
+            db[activeTab][i].status = !db[activeTab][i].status;
+            localStorage.setItem('T72_PRO_DB', JSON.stringify(db));
+            render();
             
-            userData[currentTab].forEach((user, index) => {
-                if (user.name.toLowerCase().includes(filter)) {
-                    grid.innerHTML += `
-                        <div class="user-card">
-                            <a href="${user.link}" target="_blank" class="user-link">${user.name}</a>
-                            <button class="delete-btn" onclick="deleteUser(${index})">Delete</button>
+            if(db[activeTab].every(u => u.status) && db[activeTab].length > 0) {
+                showSuccess();
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('celebration-overlay').style.display = 'flex';
+        }
+
+        function closeCelebration() {
+            document.getElementById('celebration-overlay').style.display = 'none';
+        }
+
+        function endSession() {
+            clearInterval(countdown);
+            document.getElementById('timer-box').style.display = 'none';
+        }
+
+        function render() {
+            const container = document.getElementById('entryGrid');
+            container.innerHTML = '';
+            db[activeTab].forEach((item, i) => {
+                container.innerHTML += `
+                    <div class="user-card ${item.status ? 'completed' : ''}">
+                        <div class="rank">#${i + 1}</div>
+                        <a href="${item.link}" target="_blank" class="user-link">${item.name}</a>
+                        <div class="done-toggle" onclick="toggleStatus(${i})">
+                            ${item.status ? '✅' : '⚪'}
                         </div>
-                    `;
-                }
+                    </div>
+                `;
             });
         }
-
-        // Initial Load
-        renderUsers();
+        render();
     </script>
-
 </body>
-  </html>
+        </html>
